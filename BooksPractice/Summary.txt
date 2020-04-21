@@ -1,0 +1,93 @@
+
+Program flow control: 
+	A program control instruction changes address value in the PC and hence the normal flow of execution. 
+	Change in PC causes a break in the execution of instructions. 
+	It is an important feature of the computers since it provides.
+
+Program using the different instructions:-
+	 Conditional and Unconditional Jump Instructions
+	• Compare Instruction
+	• Loop Instruction
+
+Unconditional Jump Instruction: JMP
+	
+	In conditional jump, status conditions at the time of jump instruction execution Decide whether or not the jump will occur.
+
+	The JMP instruction is the only unconditional flow control instruction.
+	It unconditionally transfers control to another point in the program.
+	The location to be transferred to is known as the target address.
+	
+	such as:
+	 In its simplest form, the JMP statement is similar to the GOTO statement in high level languages.
+
+	GOTO statement 	=	JMP statement
+
+	It has the following syntax:	
+	JMP [operator] destination
+
+
+
+	The basic syntax of JMP instruction:
+	JMP label/destination name
+
+	JMP 1234H; IP will take the value 1234H 
+	JMP BX ; IP will take the value in BX 
+	JMP [BX]; IP will take the value in memory location pointed to by BX
+
+
+ Short Conditional Jump Instructoin:
+
+ 	To konw from how many bytes, the linker has to use a long jump (instead a short one), we must know what is the maximal move of a short jump.
+
+	Instruction's size is always 2 bytes (in 16 or 32 bits program) and $bytes_count is stored on one byte (8 bits).
+	$bytes_count is a signed number, then we have the sign bit and the 7 other bits are used for the value.
+
+	Logic and arithmetic instructions set flags.
+	Flags provide state information from previous instruction(s).
+	Using flags we can perform conditional jumping, i.e., transfer program execution to some different place within the program
+
+		if condition was true
+			- jump back or forward in your code to the location specified
+			- instruction pointer(IP) gets updated(to point to the instruction to which execution will jump)
+		if condition was flase
+			- continue execution at the following instruction
+			- IP gets incremented as usual
+	Limit range to within +127 and -128 bytes from the location following the conditional jump.
+	Example:
+		- JB, JC jump to a label if the Carry flag is set
+		- JE, JZ jump to a label if the Zero flag is set
+		- JS jumps to a label if the Sign flag is set
+		- JNE, JNZ jump to a label if the Zero flag is clear
+
+Loops:
+
+	loop instructions are used to simplify the decrementing, testing and branching portion of the loop. In the above case this portion required two instructions, but in more complicated situation may require more than two instructions.
+	The loop instruction for 8086 all have the form:
+	OPCODE  D8
+	where D8 is byte displacement from current IP. 
+	The loop instruction is simplified to: With loop instruction the format for branch become:
+	MOV CX, N Begin: -- -- LOOP Begin 
+
+	 The LOOP instruction is mainly used to simulate the different loops in HLL. The Loop instructions use the CX register to indicate the loop count.
+
+	The syntax of the Loop instruction is:
+
+	LOOP label
+
+	The Loop instruction decrements CX without changing any flags
+	If CX is not zero after the decrement, control is transferred to the destination label
+	The jump is a SHORT jump only
+
+	All conditional jumps have one big limitation, unlike JMP instruction they can only jump 127 bytes forward and 128 bytes backward (note that 
+	most instructions are assembled into 3 or more bytes).  
+ 
+	We can easily avoid this limitation using a cute trick: 
+		1.Get an opposite conditional jump instruction from the table above, make it jump to label_x (can be any valid label name, but there must not be two or more labels with the same name) .  
+		2.Use JMP instruction to jump to desired location.  
+		3.Define label_x: just after the JMP instruction. 
+
+
+
+	
+
+
